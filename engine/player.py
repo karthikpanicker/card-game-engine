@@ -4,11 +4,10 @@ from pydealer import Card
 
 
 class Player:
-    def __init__(self, player_id: str, player_right: str, player_left: str):
+    def __init__(self, player_id: str, position: int):
         self.player_id: str = player_id
-        self.cards: List[Card] = [];
-        self.player_right = player_right
-        self.player_left = player_left
+        self.cards: List[Card] = []
+        self.position = position
 
     def add_cards(self, cards: List[Card]):
         self.cards.extend(cards)

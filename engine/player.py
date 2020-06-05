@@ -12,8 +12,14 @@ class Player:
     def add_cards(self, cards: List[Card]):
         self.cards.extend(cards)
 
-    def add_card(self, card : Card):
+    def add_card(self, card: Card):
         self.cards.append(card)
 
     def get_cards(self):
         return self.cards
+
+    def __str__(self):
+        return str.format("{{Player id: {}}}", self.player_id)
+
+    def __repr__(self):
+        return str.format("{{Player id: {}}}", self.player_id)

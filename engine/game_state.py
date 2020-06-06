@@ -14,3 +14,6 @@ class GameState():
 
     def __init__(self):
         self.game_state: GameStateConstants = GameStateConstants.STATE_ZERO
+
+    def get_game_state(self):
+        return self. game_state

@@ -5,7 +5,7 @@ from engine.player import PlayerAction
 
 
 class GameEngine:
-    # TODO: This is an inmemory session store. Have to be moved to a better mechanism
+    # TODO: This is an in memory session store. Have to be moved to a better mechanism
     sessionStore: Dict[str, GameSession]
 
     def __init__(self):

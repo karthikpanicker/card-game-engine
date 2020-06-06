@@ -1,6 +1,7 @@
 from typing import List, Dict
 
 from engine.game import Game
+from engine.game28.g28_dealer_action_executor import G28DealerActionExecutor
 from engine.game_round import GameRound
 from engine.game_state import GameState
 from engine.game28.gm_28_deck import Game28Deck
@@ -24,6 +25,7 @@ class Game28(Game):
         self.initialize_game()
 
     def player_action(self, player_id: str, action: PlayerAction, action_data):
-        pass
+        if action is PlayerAction.DEALING_ACTION:
+            G28DealerActionExecutor()
 
 

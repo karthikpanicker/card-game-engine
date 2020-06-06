@@ -15,6 +15,10 @@ class Game28Deck:
     def get_all_cards(self):
         return self.deck.cards
 
+    def deal_cards(self, count):
+        # TODO: might have to group this by suite
+        return self.deck.deal(count)
+
     @staticmethod
     def get_stack_for_deck():
         stack: Stack = Stack();

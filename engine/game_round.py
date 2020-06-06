@@ -9,7 +9,7 @@ Game round represents a game play involving one card from each player. The cards
 to determine who wins the round.
 """
 
-ß
+
 class GameRound:
     player_card_map: Dict[Player, Card] = {}
 

@@ -1,23 +1,27 @@
-from enum import Enum
-from typing import List
+import abc
+from typing import Dict
 
-from engine.game_round import GameRound
-
-
-class GameState(Enum):
-    ZERO_STATE = 1
-    ROUND_ONE_DEALING_DONE = 2
-    ROUND_TWO_DEALING_DONE = 2
-    GAME_DONE = 3
-
-"""
-Game represents multiple rounds of play between the players until a decision on the winner and loser is made
-"""
+from engine.game_state import GameState
+from engine.player import PlayerAction, Player
 
 
-class Game:
-    state: GameState
-    gameRounds: List[GameRound]
+class Game(abc.ABC):
+    bidder_pos: int
+    player_pos_dict: Dict[int, Player]
+    prev_game: 'Game'
 
-    def __init__(self):
-        state = GameState.ZERO_STATE
+    @abc.abstractmethod
+    def player_action(self, player_id: str, action: PlayerAction, action_data) -> GameState:
+        pass
+
+    def initialize_game(self):
+        if self.prev_game is not None:
+            self.bidder_pos = self.get_next_pos(self.prev_game.bidder_pos)
+        else:
+            self.bidder_pos = 1
+
+    def get_next_pos(self, pos):
+        next_pos = pos + 1
+        if next_pos > len(self.player_pos_dict):
+            next_pos = 1
+        return next_pos

@@ -7,6 +7,7 @@ class Game28Deck:
 
     def __init__(self):
         self.deck: Deck = Deck(cards=self.get_stack_for_deck())
+        self.deck.shuffle()
 
     def reset_deck(self):
         self.deck = Deck(cards=self.get_stack_for_deck())

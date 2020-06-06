@@ -10,5 +10,7 @@ class GameStateConstants(Enum):
 
 
 class GameState():
+    game_state: GameStateConstants
+
     def __init__(self):
         self.game_state: GameStateConstants = GameStateConstants.STATE_ZERO

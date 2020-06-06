@@ -6,13 +6,10 @@ import uuid
 from enum import Enum
 from typing import List, Dict
 
+from engine.game import Game
 from engine.game_engine_exception import GameEngineException
-from engine.player import Player
-
-
-class GameType(Enum):
-    TWENTY_EIGHT = 28
-    FIFTY_SIX = 56
+from engine.game_factory import GameFactory, GameType
+from engine.player import Player, PlayerAction
 
 
 class GameSessionState(Enum):
@@ -26,13 +23,15 @@ class GameSession:
     game_type: GameType
     number_of_players: int
     player_pos_dict: Dict[int, Player]
+    active_game: Game
 
     def __init__(self, player_ids: List[str] =[], game_type=GameType.TWENTY_EIGHT, number_of_players=4):
         self.session_id = self.__generateSession()
         self.game_type = game_type
         self.number_of_players = number_of_players
         self.session_state: GameSessionState = GameSessionState.SESSION_CREATED
-        self.player_pos_dict: Dict[int,Player]  = {}
+        self.player_pos_dict: Dict[int,Player] = {}
+        self.active_game: Game = None
         self.__allocate_seats(player_ids)
 
     @staticmethod
@@ -87,5 +86,13 @@ class GameSession:
 
     def can_start_game(self):
         return self.number_of_players == len(self.player_pos_dict)
+
+    def start_game(self):
+        self.session_state = GameSessionState.GAME_STARTED
+        self.active_game = GameFactory.get_game_implementation(
+            self.game_type, self.player_pos_dict, self.active_game)
+
+    def player_action(self, player_id: str, action_type: PlayerAction, action_data):
+        return self.active_game.player_action(player_id, action_type, action_data)
 
 

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from engine.gm_28_deck import Game28Deck
+from engine.game28.gm_28_deck import Game28Deck
 
 
 class TestGame28Deck(TestCase):

@@ -4,9 +4,12 @@ from pydealer import Deck, SUITS, VALUES, Stack, Card
 
 
 class Game28Deck:
+    deck: Deck
 
     def __init__(self):
-        self.deck: Deck = Deck(cards=self.get_stack_for_deck())
+        self.deck = Deck()
+        self.deck.empty()
+        self.deck.add(Game28Deck.get_stack_for_deck())
         self.deck.shuffle()
 
     def reset_deck(self):

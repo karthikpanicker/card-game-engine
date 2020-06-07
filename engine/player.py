@@ -9,6 +9,7 @@ class PlayerAction(Enum):
     BIDDING_ACTION = 1
     CARD_PLAY_ACTION = 2
 
+
 class Player:
     def __init__(self, player_id: str, position: int):
         self.player_id: str = player_id

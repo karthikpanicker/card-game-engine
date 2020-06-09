@@ -1,12 +1,13 @@
 from typing import Dict
 
 from engine.game import Game
+from engine.game28.game28 import Game28State
 from engine.game_engine_exception import GameEngineException
 from engine.game_state import GameState
 from engine.player import PlayerAction
 
 
-class G28StateZero(GameState):
+class StateZero(GameState):
     @staticmethod
     def handle_player_action(player_id: str, action: PlayerAction,
                              game: Game, action_data: Dict[str, object]):
@@ -18,3 +19,4 @@ class G28StateZero(GameState):
 
         for pos, player in game.player_pos_dict.items():
             player.add_cards(game.deck.deal_cards(4))
+        return Game28State.ROUND_ONE_DEALING_DONE

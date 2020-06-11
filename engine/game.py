@@ -9,22 +9,24 @@ class Game(abc.ABC):
     player_pos_dict: Dict[int, Player]
     # TODO: This might recursively refer older games and would sit in memory. Have to take a call on this.
     prev_game: 'Game'
-    __first_bidder_pos: int
-    __current_bid_value: int
-    __final_bid_value: int
-    __next_minimum_bid_value: int
-    __next_bidder_pos: int
-    __bid_history_dict: Dict[int, int]
+    first_bidder_pos: int
+    current_bid_value: int
+    final_bid_value: int
+    next_minimum_bid_value: int
+    next_bidder_pos: int
+    bid_history_dict: Dict[int, int]
 
     @abc.abstractmethod
     def player_action(self, player_id: str, action: PlayerAction, action_data):
         pass
 
     def initialize_game(self):
-        self.__bid_history_dict = {}
+        self.first_bidder_pos = 0
+        self.next_minimum_bid_value = 0
+        self.bid_history_dict = {}
         self.set_dealer_pos()
         self.set_bidder_pos()
-        self.__current_bid_value = 0
+        self.current_bid_value = 0
 
     def set_dealer_pos(self):
         if self.prev_game is not None:
@@ -33,41 +35,46 @@ class Game(abc.ABC):
             self.dealer_pos = 1
 
     def set_bidder_pos(self):
-        self.__first_bidder_pos == self.get_next_pos(self.dealer_pos)
-        self.__next_bidder_pos = self.__first_bidder_pos
+        self.first_bidder_pos = self.get_next_pos(self.dealer_pos)
+        self.next_bidder_pos = self.first_bidder_pos
 
     def get_next_pos(self, pos, increment_by: int = 1):
-        next_pos = pos + increment_by
-        if next_pos > len(self.player_pos_dict):
-            next_pos = increment_by
+        next_pos = pos
+        stride = 1 if increment_by > 0 else -1
+        for value in range(0, increment_by, stride):
+            next_pos += stride
+            if next_pos > len(self.player_pos_dict):
+                next_pos = 1
+            if next_pos < 1:
+                next_pos = len(self.player_pos_dict)
         return next_pos
 
     def get_current_bid_value(self):
-        return self.__current_bid_value
+        return self.current_bid_value
 
     def get_final_bid_value(self):
-        return self.__final_bid_value
+        return self.final_bid_value
 
     def get_next_minimum_bid_value(self):
-        return self.__next_minimum_bid_value
+        return self.next_minimum_bid_value
 
     def get_current_bidder_pos(self):
         return self.__current_bidder_pos
 
     def set_next_minimum_bid_value(self, value):
-        self.__next_minimum_bid_value = value
+        self.next_minimum_bid_value = value
 
     def set_current_bid_value(self, value):
-        self.__current_bid_value, value
+        self.current_bid_value = value
 
     def set_bidder_history(self, position, bid_value):
-        self.__bid_history_dict[position] = bid_value
+        self.bid_history_dict[position] = bid_value
 
-    def get_bidder_history(self, position, bid_value):
-        return self.__bid_history_dict
+    def get_bidder_history(self):
+        return self.bid_history_dict
 
     def set_next_bidder_pos(self, position):
-        self.__next_bidder_pos = position
+        self.next_bidder_pos = position
 
     def get_next_bidder_pos(self):
-        return self.__next_bidder_pos
+        return self.next_bidder_pos

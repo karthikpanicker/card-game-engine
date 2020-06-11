@@ -1,6 +1,7 @@
 from typing import Dict
 import engine.constants as constants
 
+
 class Game28Settings:
     settings: Dict[str,object] = { constants.MIN_BID_VALUE: 14}
 

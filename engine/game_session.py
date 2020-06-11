@@ -61,7 +61,7 @@ class GameSession:
                 return self.player_pos_dict
         raise GameEngineException("No free position available for allocation")
 
-    def change_player_pos(self, new_position ,player_id):
+    def change_player_pos(self, new_position , player_id):
         if self.session_state is not GameSessionState.SESSION_CREATED:
             raise GameEngineException("Cannot change player position after starting the game")
         if new_position > self.number_of_players:

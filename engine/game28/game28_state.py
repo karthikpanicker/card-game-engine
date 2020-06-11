@@ -1,0 +1,11 @@
+from enum import Enum
+
+
+class Game28State(Enum):
+    STATE_ZERO = 1
+    ROUND_ONE_DEALING_DONE = 2
+    ROUND_ONE_BIDDING_DONE = 3
+    ROUND_TWO_DEALING_DONE = 4
+    ROUND_TWO_BIDDING_DONE = 5
+    TRUMP_SHOWN = 6
+    GAME_OVER = 7

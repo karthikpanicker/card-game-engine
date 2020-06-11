@@ -44,7 +44,6 @@ class TestGameSession(TestCase):
         session = GameSession(['player1', 'player2', 'player3', 'player4'])
         with self.assertRaises(GameEngineException) as context:
             session.change_player_pos(5, 'player5')
-        print(context.exception)
         self.assertTrue('Position invalid for maximum number of 4 players' in str(context.exception))
 
     def test_get_player_position_and_details(self):

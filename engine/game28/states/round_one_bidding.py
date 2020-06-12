@@ -8,7 +8,7 @@ from engine.player import PlayerAction
 import engine.constants as constants
 
 
-class RoundOneDealingDone(GameState):
+class RoundOneBidding(GameState):
 
     @staticmethod
     def handle_player_action(player_id: str, action: PlayerAction, game: Game, action_data: Dict[str, object]):
@@ -18,8 +18,8 @@ class RoundOneDealingDone(GameState):
         if player_id is not game.player_pos_dict[game.get_next_bidder_pos()].player_id:
             raise GameEngineException("Specified player is not the next bidder")
         if bid_value is constants.PASS:
-            RoundOneDealingDone.validate_pass(game)
-        return RoundOneDealingDone.process_bid_value(bid_value, game)
+            RoundOneBidding.validate_pass(game)
+        return RoundOneBidding.process_bid_value(bid_value, game)
 
     @staticmethod
     def validate_pass(game: Game):
@@ -34,7 +34,7 @@ class RoundOneDealingDone(GameState):
             game.set_current_bid_value(int(value))
         bidder_pos = game.get_next_bidder_pos()
         game.set_bidder_history(bidder_pos,value)
-        return RoundOneDealingDone.find_and_set_next_bidder_pos_and_bid_value(game, value, bidder_pos)
+        return RoundOneBidding.find_and_set_next_bidder_pos_and_bid_value(game, value, bidder_pos)
 
     @staticmethod
     def find_and_set_next_bidder_pos_and_bid_value(game, bid_value, current_position):
@@ -53,13 +53,14 @@ class RoundOneDealingDone(GameState):
         elif len(game.get_bidder_history()) == 3:
             if len(list(filter(lambda x: x is constants.PASS, game.get_bidder_history().values()))) == 2:
                 nxt_bidder_pos = game.get_next_pos(current_position, -1)
-                nxt_bid_value = 20
+                nxt_bid_value = game.settings.get_setting_value(constants.FIRST_ROUND_HONORS_MIN)
             else:
                 nxt_bidder_pos = game.get_next_pos(current_position, 1)
                 nxt_bid_value += 1
         elif len(game.get_bidder_history()) == 4:
             state = Game28State.ROUND_ONE_BIDDING_DONE
-            nxt_bid_value = 22
+            nxt_bid_value = game.settings.get_setting_value(constants.SECOND_ROUND_HONORS_MIN)
+            nxt_bidder_pos = game.get_first_bidder_pos()
 
         game.set_next_bidder_pos(nxt_bidder_pos)
         game.set_next_minimum_bid_value(nxt_bid_value)

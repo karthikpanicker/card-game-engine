@@ -78,3 +78,6 @@ class Game(abc.ABC):
 
     def get_next_bidder_pos(self):
         return self.next_bidder_pos
+
+    def get_first_bidder_pos(self):
+        return self.first_bidder_pos

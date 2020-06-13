@@ -1,0 +1,2 @@
+class GameEngineException(Exception):
+    pass

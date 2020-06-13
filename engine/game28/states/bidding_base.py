@@ -18,7 +18,6 @@ class BiddingBase(GameState):
         if value != constants.PASS:
             if int(value) < game.get_next_minimum_bid_value():
                 raise GameEngineException("Can't bid below or equal to the current bid value")
-            game.set_current_bid_value(int(value))
             if constants.TRUMP_CARD_ABBREVIATION not in action_data:
                 raise GameEngineException("Choose a trump card for bidding")
             trump_card = action_data[constants.TRUMP_CARD_ABBREVIATION]
@@ -27,3 +26,4 @@ class BiddingBase(GameState):
                     game.set_trump_card(card)
             if game.get_trump_card() is None:
                 raise GameEngineException("Trump card specified is not in players hand")
+            game.set_current_bid_value(int(value))

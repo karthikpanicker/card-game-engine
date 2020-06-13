@@ -21,3 +21,9 @@ class GameRound:
 
     def get_card_count(self):
         return len(self.player_card_map)
+
+    def summarize(self, trump_card):
+        if trump_card is None:
+            print("hello world")
+
+

@@ -16,6 +16,7 @@ class Player:
         self.player_id: str = player_id
         self.cards: List[Card] = []
         self.position = position
+        self.points = 0
 
     def add_cards(self, cards: List[Card]):
         self.cards.extend(cards)
@@ -25,6 +26,12 @@ class Player:
 
     def get_cards(self):
         return self.cards
+
+    def add_points(self, point):
+        self.points += point
+
+    def get_points(self):
+        return self.points
 
     def __str__(self):
         return str.format("{{Player id: {}}}", self.player_id)

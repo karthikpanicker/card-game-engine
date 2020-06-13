@@ -1,7 +1,6 @@
 from unittest import TestCase
 
 from engine import constants
-from engine.game28.game28_state import Game28State
 from engine.game_engine_exception import GameEngineException
 from engine.game_factory import GameFactory, GameType
 from engine.player import Player, PlayerAction

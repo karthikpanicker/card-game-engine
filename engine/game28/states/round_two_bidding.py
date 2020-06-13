@@ -9,8 +9,7 @@ from engine.player import PlayerAction
 
 
 class RoundTwoBidding(GameState):
-    @staticmethod
-    def handle_player_action(player_id: str, action: PlayerAction, game: Game, action_data: Dict[str, object]):
+    def handle_player_action(self, player_id: str, action: PlayerAction, game: Game, action_data: Dict[str, object]):
         if action is not PlayerAction.BIDDING_ACTION:
             raise GameEngineException("Invalid player action for the game state")
         bid_value = action_data[constants.BID_VALUE]
@@ -22,7 +21,7 @@ class RoundTwoBidding(GameState):
             game.set_current_bid_value(int(bid_value))
         bidder_pos = game.get_next_bidder_pos()
         game.set_bidder_history(bidder_pos,bid_value)
-        return RoundTwoBidding.find_and_set_next_bidder_pos_and_bid_value(game, bid_value, bidder_pos)
+        return self.find_and_set_next_bidder_pos_and_bid_value(game, bid_value, bidder_pos)
 
     @staticmethod
     def find_and_set_next_bidder_pos_and_bid_value(game, bid_value, current_position):

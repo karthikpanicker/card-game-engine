@@ -7,8 +7,7 @@ from engine.player import PlayerAction
 
 
 class DealingBase(GameState):
-    @staticmethod
-    def handle_player_action(player_id: str, action: PlayerAction,
+    def handle_player_action(self, player_id: str, action: PlayerAction,
                              game: Game, action_data: Dict[str, object]):
         if action is not PlayerAction.DEALING_ACTION:
             raise GameEngineException("Invalid player action for the game state")

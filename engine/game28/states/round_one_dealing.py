@@ -6,9 +6,8 @@ from engine.game28.states.dealing_base import DealingBase
 from engine.player import PlayerAction
 
 
-class RoundOneDealing():
-    @staticmethod
-    def handle_player_action(player_id: str, action: PlayerAction,
+class RoundOneDealing(DealingBase):
+    def handle_player_action(self, player_id: str, action: PlayerAction,
                              game: Game, action_data: Dict[str, object]):
-        DealingBase.handle_player_action(player_id, action,game, action_data)
+        super().handle_player_action(player_id, action,game, action_data)
         return Game28State.ROUND_ONE_DEALING_DONE

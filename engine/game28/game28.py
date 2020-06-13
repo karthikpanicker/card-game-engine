@@ -9,6 +9,7 @@ from engine.game28.states.round_two_bidding import RoundTwoBidding
 from engine.game28.states.round_two_dealing import RoundTwoDealing
 from engine.game28.states.round_one_bidding import RoundOneBidding
 from engine.game28.states.round_one_dealing import RoundOneDealing
+from engine.game28.states.state_factory import Game28StateFactory
 from engine.game_round import GameRound
 from engine.game28.gm_28_deck import Game28Deck
 from engine.player import Player, PlayerAction
@@ -40,11 +41,5 @@ class Game28(Game):
         self.state = game_state
 
     def player_action(self, player_id: str, action: PlayerAction, action_data: Dict[str, object] = {}):
-        if self.state is Game28State.STATE_ZERO:
-            self.state = RoundOneDealing.handle_player_action(player_id, action, self, action_data)
-        elif self.state is Game28State.ROUND_ONE_DEALING_DONE:
-            self.state = RoundOneBidding.handle_player_action(player_id, action, self, action_data)
-        elif self.state is Game28State.ROUND_ONE_BIDDING_DONE:
-            self.state = RoundTwoDealing.handle_player_action(player_id, action, self, action_data)
-        elif self.state is Game28State.ROUND_TWO_DEALING_DONE:
-            self.state = RoundTwoBidding.handle_player_action(player_id, action, self, action_data)
+        state_handler = Game28StateFactory.get_state_handler(self.state)
+        self.state = state_handler.handle_player_action(player_id, action, self, action_data)

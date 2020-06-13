@@ -10,31 +10,29 @@ import engine.constants as constants
 
 class RoundOneBidding(GameState):
 
-    @staticmethod
-    def handle_player_action(player_id: str, action: PlayerAction, game: Game, action_data: Dict[str, object]):
+    def handle_player_action(self, player_id: str, action: PlayerAction, game: Game, action_data: Dict[str, object]):
         if action is not PlayerAction.BIDDING_ACTION:
             raise GameEngineException("Invalid player action for the game state")
         bid_value = action_data[constants.BID_VALUE]
         if player_id is not game.player_pos_dict[game.get_next_bidder_pos()].player_id:
             raise GameEngineException("Specified player is not the next bidder")
         if bid_value is constants.PASS:
-            RoundOneBidding.validate_pass(game)
-        return RoundOneBidding.process_bid_value(bid_value, game)
+            self.validate_pass(game)
+        return self.process_bid_value(bid_value, game)
 
     @staticmethod
     def validate_pass(game: Game):
         if game.get_current_bid_value() is 0:
             raise GameEngineException("First player to bid cannot pass the bid")
 
-    @staticmethod
-    def process_bid_value(value, game):
+    def process_bid_value(self, value, game):
         if value != constants.PASS:
             if int(value) < game.get_next_minimum_bid_value():
                 raise GameEngineException("Can't bid below or equal to the current bid value")
             game.set_current_bid_value(int(value))
         bidder_pos = game.get_next_bidder_pos()
         game.set_bidder_history(bidder_pos,value)
-        return RoundOneBidding.find_and_set_next_bidder_pos_and_bid_value(game, value, bidder_pos)
+        return self.find_and_set_next_bidder_pos_and_bid_value(game, value, bidder_pos)
 
     @staticmethod
     def find_and_set_next_bidder_pos_and_bid_value(game, bid_value, current_position):

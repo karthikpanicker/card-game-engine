@@ -1,6 +1,8 @@
 import abc
 from typing import Dict
 
+from pydealer import Card
+
 from engine.player import PlayerAction, Player
 
 
@@ -15,6 +17,7 @@ class Game(abc.ABC):
     next_minimum_bid_value: int
     next_bidder_pos: int
     bid_history_dict: Dict[int, int]
+    current_trump_card: Card
 
     @abc.abstractmethod
     def player_action(self, player_id: str, action: PlayerAction, action_data):
@@ -81,3 +84,9 @@ class Game(abc.ABC):
 
     def get_first_bidder_pos(self):
         return self.first_bidder_pos
+
+    def get_trump_card(self):
+        return self.current_trump_card
+
+    def set_trump_card(self, card: Card):
+        self.current_trump_card = card

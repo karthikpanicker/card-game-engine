@@ -3,22 +3,16 @@ from typing import Dict
 from engine import constants
 from engine.game import Game
 from engine.game28.game28_state import Game28State
+from engine.game28.states.bidding_base import BiddingBase
 from engine.game_engine_exception import GameEngineException
 from engine.game_state import GameState
 from engine.player import PlayerAction
 
 
-class RoundTwoBidding(GameState):
+class RoundTwoBidding(BiddingBase):
     def handle_player_action(self, player_id: str, action: PlayerAction, game: Game, action_data: Dict[str, object]):
-        if action is not PlayerAction.BIDDING_ACTION:
-            raise GameEngineException("Invalid player action for the game state")
+        super().handle_player_action(player_id, action, game ,action_data)
         bid_value = action_data[constants.BID_VALUE]
-        if player_id is not game.player_pos_dict[game.get_next_bidder_pos()].player_id:
-            raise GameEngineException("Specified player is not the next bidder")
-        if bid_value != constants.PASS:
-            if int(bid_value) < game.get_next_minimum_bid_value():
-                raise GameEngineException("Can't bid below or equal to the current bid value")
-            game.set_current_bid_value(int(bid_value))
         bidder_pos = game.get_next_bidder_pos()
         game.set_bidder_history(bidder_pos,bid_value)
         return self.find_and_set_next_bidder_pos_and_bid_value(game, bid_value, bidder_pos)

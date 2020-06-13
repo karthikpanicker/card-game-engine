@@ -18,3 +18,6 @@ class GameRound:
 
     def add_player_card(self, player: Player, card: Card):
         self.player_card_map[player] = card
+
+    def get_card_count(self):
+        return len(self.player_card_map)

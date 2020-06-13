@@ -21,7 +21,6 @@ Game represents multiple rounds of play between the players until a decision on 
 
 class Game28(Game):
     state: Game28State
-    gameRounds: List[GameRound]
     deck: Game28Deck
     settings: Game28Settings
 

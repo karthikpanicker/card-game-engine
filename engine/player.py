@@ -8,6 +8,7 @@ class PlayerAction(Enum):
     DEALING_ACTION = 0
     BIDDING_ACTION = 1
     CARD_PLAY_ACTION = 2
+    SHOW_TRUMP_ACTION = 3
 
 
 class Player:

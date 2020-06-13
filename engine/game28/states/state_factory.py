@@ -17,3 +17,7 @@ class Game28StateFactory:
             return RoundTwoDealing()
         elif state is Game28State.ROUND_TWO_DEALING_DONE:
             return RoundTwoBidding()
+        elif state is Game28State.ROUND_TWO_BIDDING_DONE:
+            return GamePlayStageOne()
+        elif state is Game28State.TRUMP_SHOWN:
+            return GamePlayStageTwo()

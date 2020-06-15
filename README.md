@@ -1,4 +1,4 @@
-# card28-engine
+# card-game-engine
 An engine for Card Game. This engine would support 28, a popular card game in India.
 
 # How to setup the project?

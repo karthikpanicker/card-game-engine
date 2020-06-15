@@ -55,6 +55,9 @@ class GameRound:
     def get_card_count(self):
         return len(self.player_card_map)
 
+    def get_first_card(self):
+        return list(self.player_card_map.values())[0]
+
     # Summarize is called once all 4 players play their cards. This will determine the points for the round  and who the
     # round winner is.
 

@@ -54,7 +54,6 @@ class TestGamePlay(TestCase):
         game.player_action('player1', PlayerAction.SHOW_TRUMP_ACTION,None)
         self.assertEqual(game.state, Game28State.TRUMP_SHOWN)
 
-
     def test_game_play_cheating_player4_asks_for_trump(self):
         game = TestGamePlay.create_game_for_testing()
         game.player_action('player2', PlayerAction.CARD_PLAY_ACTION,
@@ -64,6 +63,27 @@ class TestGamePlay(TestCase):
         with self.assertRaises(GameEngineException) as context:
             game.player_action('player4', PlayerAction.SHOW_TRUMP_ACTION,None)
         self.assertTrue("Can't ask to show trump when the player has the same suite" in str(context.exception))
+
+    def test_game_play_two_rounds(self):
+        game = TestGamePlay.create_game_for_testing()
+        game.player_action('player2', PlayerAction.CARD_PLAY_ACTION,
+                           {constants.CARD_ABBREVIATION: Card("7", "Diamonds").abbrev})
+        game.player_action('player3', PlayerAction.CARD_PLAY_ACTION,
+                           {constants.CARD_ABBREVIATION: Card("Jack", "Diamonds").abbrev})
+        game.player_action('player4', PlayerAction.CARD_PLAY_ACTION,
+                           {constants.CARD_ABBREVIATION: Card("Queen", "Diamonds").abbrev})
+        game.player_action('player1', PlayerAction.CARD_PLAY_ACTION,
+                           {constants.CARD_ABBREVIATION: Card("10", "Diamonds").abbrev})
+        game.player_action('player3', PlayerAction.CARD_PLAY_ACTION,
+                           {constants.CARD_ABBREVIATION: Card("Jack", "Clubs").abbrev})
+        game.player_action('player4', PlayerAction.CARD_PLAY_ACTION,
+                           {constants.CARD_ABBREVIATION: Card("9", "Clubs").abbrev})
+        game.player_action('player1', PlayerAction.CARD_PLAY_ACTION,
+                           {constants.CARD_ABBREVIATION: Card("Ace", "Clubs").abbrev})
+        game.player_action('player2', PlayerAction.CARD_PLAY_ACTION,
+                           {constants.CARD_ABBREVIATION: Card("Queen", "Clubs").abbrev})
+
+
 
     @staticmethod
     def create_game_for_testing():

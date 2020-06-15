@@ -60,6 +60,11 @@ class Game(abc.ABC):
                 next_pos = len(self.player_pos_dict)
         return next_pos
 
+    def find_player_position(self, player: Player):
+        for pos, p in self.player_pos_dict.items():
+            if player.player_id == p.player_id:
+                return pos
+
     def get_current_bid_value(self):
         return self.current_bid_value
 

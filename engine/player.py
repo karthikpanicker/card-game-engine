@@ -27,6 +27,9 @@ class Player:
     def get_cards(self):
         return self.cards
 
+    def remove_card(self,card):
+        self.cards.remove(card)
+
     def add_points(self, point):
         self.points += point
 

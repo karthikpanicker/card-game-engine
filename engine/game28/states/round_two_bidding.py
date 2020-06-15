@@ -14,7 +14,9 @@ class RoundTwoBidding(BiddingBase):
         super().handle_player_action(player_id, action, game ,action_data)
         bid_value = action_data[constants.BID_VALUE]
         bidder_pos = game.get_next_bidder_pos()
-        game.set_bidder_history(bidder_pos,bid_value)
+        # To prevent history from round one bidding to be overwritten, player number added
+        # to player position.
+        game.set_bidder_history(len(game.player_pos_dict) + bidder_pos,bid_value)
         return self.find_and_set_next_bidder_pos_and_bid_value(game, bid_value, bidder_pos)
 
     @staticmethod

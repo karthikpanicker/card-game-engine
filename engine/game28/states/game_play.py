@@ -41,7 +41,7 @@ class GamePlay(GameState):
 
         if game_round.get_card_count() == len(game.player_pos_dict):
             trump_card = game.get_trump_card() if game.get_trump_shown() else None
-            round_winner = game_round.summarize(trump_card)
+            round_winner = game_round.summarize()
             game.set_next_player_pos(game.find_player_position(round_winner))
             game.set_active_round(None)
         else:

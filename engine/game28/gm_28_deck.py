@@ -24,7 +24,7 @@ class Game28Deck:
 
     @staticmethod
     def get_stack_for_deck():
-        stack: Stack = Stack();
+        stack: Stack = Stack()
         cards: List[Card] = []
         for suit in SUITS:
             for value in VALUES:

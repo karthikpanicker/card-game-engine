@@ -1,4 +1,5 @@
 from engine.game28.game28_state import Game28State
+from engine.game28.states.game_play import GamePlay
 from engine.game28.states.round_one_bidding import RoundOneBidding
 from engine.game28.states.round_one_dealing import RoundOneDealing
 from engine.game28.states.round_two_bidding import RoundTwoBidding
@@ -17,3 +18,5 @@ class Game28StateFactory:
             return RoundTwoDealing()
         elif state is Game28State.ROUND_TWO_DEALING_DONE:
             return RoundTwoBidding()
+        elif state in [Game28State.ROUND_TWO_BIDDING_DONE, Game28State.TRUMP_SHOWN]:
+            return GamePlay()

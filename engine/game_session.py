@@ -1,7 +1,3 @@
-"""
-
-A game session would involve a set of players playing multiple games.
-"""
 import uuid
 from enum import Enum
 from typing import List, Dict
@@ -10,6 +6,7 @@ from engine.game import Game
 from engine.game_engine_exception import GameEngineException
 from engine.game_factory import GameFactory, GameType
 from engine.player import Player, PlayerAction
+from engine.team import Team
 
 
 class GameSessionState(Enum):
@@ -18,6 +15,16 @@ class GameSessionState(Enum):
 
 
 class GameSession:
+    """
+
+    A game session would involve a set of players playing multiple games.
+    ...
+
+     Methods
+    -------
+    distribute_player_to_teams()
+        links the player to a team. Teams teams considered in the current engine implementation
+    """
     session_id: str
     players: List[Player]
     game_type: GameType
@@ -89,10 +96,23 @@ class GameSession:
 
     def start_game(self):
         self.session_state = GameSessionState.GAME_STARTED
+        self.distribute_player_to_teams()
         self.active_game = GameFactory.get_game_implementation(
             self.game_type, self.player_pos_dict, self.active_game)
 
     def player_action(self, player_id: str, action_type: PlayerAction, action_data):
         return self.active_game.player_action(player_id, action_type, action_data)
+
+    def distribute_player_to_teams(self):
+        first_team = Team()
+        second_team = Team()
+        for pos, player in self.player_pos_dict.items():
+            if pos % 2 == 1:
+                player.set_team(first_team)
+                first_team.add_player_pos(pos)
+            else:
+                player.set_team(second_team)
+                second_team.add_player_pos(pos)
+
 
 

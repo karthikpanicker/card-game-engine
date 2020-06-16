@@ -31,6 +31,8 @@ class GameSession:
     number_of_players: int
     player_pos_dict: Dict[int, Player]
     active_game: Game
+    first_team: Team
+    second_team: Team
 
     def __init__(self, player_ids: List[str] =[], game_type=GameType.TWENTY_EIGHT, number_of_players=4):
         self.session_id = self.__generateSession()
@@ -40,6 +42,8 @@ class GameSession:
         self.player_pos_dict: Dict[int,Player] = {}
         self.active_game: Game = None
         self.__allocate_seats(player_ids)
+        self.first_team = Team()
+        self.second_team = Team()
 
     @staticmethod
     def __generateSession():
@@ -104,15 +108,13 @@ class GameSession:
         return self.active_game.player_action(player_id, action_type, action_data)
 
     def distribute_player_to_teams(self):
-        first_team = Team()
-        second_team = Team()
         for pos, player in self.player_pos_dict.items():
             if pos % 2 == 1:
-                player.set_team(first_team)
-                first_team.add_player_pos(pos)
+                player.set_team(self.first_team)
+                self.first_team.add_player_pos(pos)
             else:
-                player.set_team(second_team)
-                second_team.add_player_pos(pos)
+                player.set_team(self.second_team)
+                self.second_team.add_player_pos(pos)
 
 
 

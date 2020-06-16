@@ -27,7 +27,6 @@ class TestGame28(TestCase):
         game = self.initialize_game(None)
         game.player_action('player1', PlayerAction.DEALING_ACTION)
         self.assertEqual(4,len(game.player_pos_dict[1].get_cards()))
-        print(game.player_pos_dict[2].get_cards())
 
     def test_player_action_dealing_cards_by_non_dealer(self):
         game = self.initialize_game(None)

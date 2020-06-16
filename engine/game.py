@@ -45,8 +45,8 @@ class Game(abc.ABC):
             self.dealer_pos = 1
 
     def set_bidder_pos(self):
-        self.first_bidder_pos = self.get_next_pos(self.dealer_pos)
-        self.next_bidder_pos = self.first_bidder_pos
+        self.set_first_bidder_pos(self.get_next_pos(self.dealer_pos))
+        self.next_bidder_pos = self.get_first_bidder_pos()
         self.next_player_pos = self.first_bidder_pos
 
     def get_next_pos(self, pos, increment_by: int = 1):
@@ -60,23 +60,10 @@ class Game(abc.ABC):
                 next_pos = len(self.player_pos_dict)
         return next_pos
 
-    def get_current_bid_value(self):
-        return self.current_bid_value
-
-    def get_final_bid_value(self):
-        return self.final_bid_value
-
-    def get_next_minimum_bid_value(self):
-        return self.next_minimum_bid_value
-
-    def get_current_bidder_pos(self):
-        return self.__current_bidder_pos
-
-    def set_next_minimum_bid_value(self, value):
-        self.next_minimum_bid_value = value
-
-    def set_current_bid_value(self, value):
-        self.current_bid_value = value
+    def find_player_position(self, player: Player):
+        for pos, p in self.player_pos_dict.items():
+            if player.player_id == p.player_id:
+                return pos
 
     def set_bidder_history(self, position, bid_value):
         self.bid_history_dict[position] = bid_value
@@ -84,14 +71,35 @@ class Game(abc.ABC):
     def get_bidder_history(self):
         return self.bid_history_dict
 
+    def get_current_bid_value(self):
+        return self._current_bid_value
+
+    def set_current_bid_value(self, value):
+        self._current_bid_value = value
+
+    def get_final_bid_value(self):
+        return self._final_bid_value
+
+    def set_final_bid_value(self, value):
+        self._final_bid_value = value
+
+    def get_next_minimum_bid_value(self):
+        return self._next_minimum_bid_value
+
+    def set_next_minimum_bid_value(self, value):
+        self._next_minimum_bid_value = value
+
     def set_next_bidder_pos(self, position):
-        self.next_bidder_pos = position
+        self._next_bidder_pos = position
 
     def get_next_bidder_pos(self):
-        return self.next_bidder_pos
+        return self._next_bidder_pos
 
     def get_first_bidder_pos(self):
-        return self.first_bidder_pos
+        return self._first_bidder_pos
+
+    def set_first_bidder_pos(self, value):
+        self._first_bidder_pos = value
 
     def get_trump_card(self):
         return self._current_trump_card
@@ -129,3 +137,8 @@ class Game(abc.ABC):
     trump_shown = property(get_trump_shown, set_trump_shown)
     current_trump_card = property(get_trump_card, set_trump_card)
     current_trump_card_player = property(get_trump_card_player, set_trump_card_player)
+    first_bidder_pos = property(get_first_bidder_pos, set_first_bidder_pos)
+    next_bidder_pos = property(get_next_bidder_pos, set_next_bidder_pos)
+    current_bid_value = property(get_current_bid_value, set_current_bid_value)
+    next_minimum_bid_value = property(get_next_minimum_bid_value, set_next_minimum_bid_value)
+    final_bid_value = property(get_final_bid_value, set_final_bid_value)

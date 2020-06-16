@@ -44,7 +44,7 @@ class TestRoundOneBidding(TestCase):
         game.player_action('player2', PlayerAction.BIDDING_ACTION,
                            {constants.BID_VALUE: self.settings.get_setting_value(constants.MIN_BID_VALUE),
                             constants.TRUMP_CARD_ABBREVIATION: TestRoundOneBidding.get_random_card_abbreviation(game)})
-        self.assertEqual(game.current_bid_value, self.settings.get_setting_value(constants.MIN_BID_VALUE))
+        self.assertEqual(game.get_current_bid_value(), self.settings.get_setting_value(constants.MIN_BID_VALUE))
 
     def test_bid_by_second_player_below_previous_bid(self):
         game = TestRoundOneBidding.create_game_for_testing()
@@ -66,8 +66,8 @@ class TestRoundOneBidding(TestCase):
         game.player_action('player3', PlayerAction.BIDDING_ACTION,
                            {constants.BID_VALUE: self.settings.get_setting_value(constants.MIN_BID_VALUE) + 1,
                             constants.TRUMP_CARD_ABBREVIATION: TestRoundOneBidding.get_random_card_abbreviation(game)})
-        self.assertEqual(game.current_bid_value, self.settings.get_setting_value(constants.MIN_BID_VALUE) + 1)
-        self.assertEqual(game.next_bidder_pos, 4)
+        self.assertEqual(game.get_current_bid_value(), self.settings.get_setting_value(constants.MIN_BID_VALUE) + 1)
+        self.assertEqual(game.get_next_bidder_pos(), 4)
 
     def test_bid_by_second_player_passing_bid(self):
         game = TestRoundOneBidding.create_game_for_testing()
@@ -76,7 +76,7 @@ class TestRoundOneBidding(TestCase):
                             constants.TRUMP_CARD_ABBREVIATION: TestRoundOneBidding.get_random_card_abbreviation(game)})
         game.player_action('player3', PlayerAction.BIDDING_ACTION,
                            {constants.BID_VALUE: constants.PASS})
-        self.assertEqual(game.current_bid_value, self.settings.get_setting_value(constants.MIN_BID_VALUE))
+        self.assertEqual(game.get_current_bid_value(), self.settings.get_setting_value(constants.MIN_BID_VALUE))
         self.assertEqual(game.get_next_bidder_pos(), 1)
 
     def test_bidding_opposition_pass_their_turn(self):
@@ -86,7 +86,7 @@ class TestRoundOneBidding(TestCase):
                             constants.TRUMP_CARD_ABBREVIATION: TestRoundOneBidding.get_random_card_abbreviation(game)})
         game.player_action('player3', PlayerAction.BIDDING_ACTION, {constants.BID_VALUE: constants.PASS})
         game.player_action('player1', PlayerAction.BIDDING_ACTION, {constants.BID_VALUE: constants.PASS})
-        self.assertEqual(game.next_minimum_bid_value, 20)
+        self.assertEqual(game.get_next_minimum_bid_value(), 20)
         self.assertEqual(game.get_next_bidder_pos(), 4)
 
     def test_bidding_everyone_passes_except_first(self):

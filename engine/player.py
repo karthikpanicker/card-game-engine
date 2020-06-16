@@ -3,6 +3,8 @@ from typing import List
 
 from pydealer import Card
 
+from engine.team import Team
+
 
 class PlayerAction(Enum):
     DEALING_ACTION = 0
@@ -17,6 +19,7 @@ class Player:
         self.cards: List[Card] = []
         self.position = position
         self.points = 0
+        self.team: Team = None
 
     def add_cards(self, cards: List[Card]):
         self.cards.extend(cards)
@@ -36,8 +39,17 @@ class Player:
     def get_points(self):
         return self.points
 
+    def set_team(self, value):
+        self._team = value
+
+    def get_team(self) -> Team:
+        return self._team
+
     def __str__(self):
         return str.format("{{Player id: {}}}", self.player_id)
 
     def __repr__(self):
         return str.format("{{Player id: {}}}", self.player_id)
+
+    team = property(get_team, set_team)
+

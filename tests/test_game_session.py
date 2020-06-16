@@ -57,3 +57,9 @@ class TestGameSession(TestCase):
     def test_can_start_game_with_seats_filled(self):
         session = GameSession(['player1', 'player2', 'player3','player4'])
         self.assertTrue(session.can_start_game())
+
+    def test_start_game(self):
+        session = GameSession(['player1', 'player2', 'player3', 'player4'])
+        session.start_game()
+        first_player_team = session.get_player_at_position(1).get_team()
+        self.assertTrue(all(item in [1,3] for item in first_player_team.get_player_positions()))

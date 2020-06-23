@@ -153,8 +153,8 @@ class TestGameRound(TestCase):
         game_round.add_player_card(player2, Card("10", "Hearts"))
         game_round.add_player_card(player3, Card("10", "DIAMONDS"))
         game_round.add_player_card(player4, Card("7", "Hearts"))
-        # game_round.set_trump_card_details(, Card("7", "SPADE"))
-        game_round.trump_lift_player = Player(0,0)
+        game_round.set_trump_card_details(None, Card("7", "SPADE"))
+        #game_round.trump_lift_player = None
         game_round.trump_card = Card("7", "SPADE")
 
         game_round.summarize()
@@ -173,9 +173,10 @@ class TestGameRound(TestCase):
         game_round.add_player_card(player2, Card("10", "SPADE"))
         game_round.add_player_card(player3, Card("9", "SPADE"))
         game_round.add_player_card(player4, Card("7", "SPADE"))
-        # game_round.set_trump_card_details(, Card("7", "SPADE"))
-        game_round.trump_lift_player = Player(0,0)
+        game_round.set_trump_card_details(None, Card("7", "SPADE"))
+        #game_round.trump_lift_player = Player(0,0)
         game_round.trump_card = Card("7", "SPADE")
 
         game_round.summarize()
         self.assertEqual(player3.get_points(), 3)
+

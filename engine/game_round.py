@@ -44,7 +44,8 @@ class GameRound:
 
         }
 
-    # Adds the Player and Card Played details to a list
+    # player_card_map contains the details of the card played by a player during a round.
+    # player.cards is the list of cards still available with the player
     def add_player_card(self, player: Player, card: Card):
         self.player_card_map[player] = card
 
@@ -73,7 +74,7 @@ class GameRound:
             # If the trump card has been lifted, the highest value of the leading suit wins the round provided
             # a trump has not been used in that round
             for player in self.player_card_map:
-                if player.player_id == self.trump_lift_player.player_id:
+                if self.trump_lift_player is not None and player.player_id == self.trump_lift_player.player_id:
                     self.trump_lifted = True
                 if self.high_card is None:
                     self.high_card = self.player_card_map[player]

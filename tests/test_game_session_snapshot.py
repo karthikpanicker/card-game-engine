@@ -15,7 +15,6 @@ from engine.player import Player, PlayerAction
 class TestGameSession(TestCase):
     def test_game_generate_session_snap1(self):
         session = GameSession(['player1', 'player2', 'player3', 'player4'])
-
         game = TestGameSession.create_game_for_testing()
         session.active_game = game
         session.distribute_player_to_teams()
@@ -26,10 +25,9 @@ class TestGameSession(TestCase):
         game.player_action('player4', PlayerAction.CARD_PLAY_ACTION,
                            {constants.CARD_ABBREVIATION: Card("Jack", "Spades").abbrev})
         game.player_action('player1', PlayerAction.SHOW_TRUMP_ACTION,None)
-        print("Sreeeee")
-        x = GameSessionSnapshot.generate_snapshot(session)
+        x = GameSessionManager.game_session_manager(session)
         if x is not None:
-            print("x - " )
+            print("x - ", x )
         print(x)
         self.assertEqual(game.state, Game28State.TRUMP_SHOWN)
 
@@ -40,7 +38,6 @@ class TestGameSession(TestCase):
         player_dict = {1: Player('player1', 1), 2: Player('player2', 2), 3: Player('player3', 3),
                        4: Player('player4', 4), }
         game = GameFactory.get_game_implementation(GameType.TWENTY_EIGHT, player_dict, None)
-
         TestGameSession.add_cards_without_dealing(player_dict)
         game.state = Game28State.ROUND_ONE_DEALING_DONE
         game.player_action('player2', PlayerAction.BIDDING_ACTION,
@@ -87,6 +84,7 @@ class TestGameSession(TestCase):
                 player.add_cards([Card("10", "Diamonds"), Card("Ace", "Diamonds"), Card("7", "Clubs"),
                                   Card("8", "Clubs"), Card("Ace", "Clubs"), Card("8", "Hearts"),
                                   Card("9", "Hearts"), Card("King", "Hearts")])
+
 
 
 

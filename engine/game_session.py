@@ -5,6 +5,7 @@ from typing import List, Dict
 from engine.game import Game
 from engine.game_engine_exception import GameEngineException
 from engine.game_factory import GameFactory, GameType
+from engine.game_session_snapshot import *
 from engine.player import Player, PlayerAction
 from engine.team import Team
 
@@ -105,7 +106,8 @@ class GameSession:
             self.game_type, self.player_pos_dict, self.active_game)
 
     def player_action(self, player_id: str, action_type: PlayerAction, action_data):
-        return self.active_game.player_action(player_id, action_type, action_data)
+        self.active_game.player_action(player_id, action_type, action_data)
+        return GameSessionManager.game_session_manager(self)
 
     def distribute_player_to_teams(self):
         for pos, player in self.player_pos_dict.items():

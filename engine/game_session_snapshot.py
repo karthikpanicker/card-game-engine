@@ -5,19 +5,23 @@ from engine.game import Game
 from engine.player import Player
 from engine.game_factory import GameType
 from pydealer import Card
+from typing import List, Dict
 
 # GameSessionSnapshot fetches a snapshot of the current state of the Game Session/Game/Round and this will be used
 #       to represent the game at the front end.
 
+
 class GameSessionManager:
     game_session1: GameSession
 
+    @staticmethod
     def game_session_manager(session1: GameSession):
         game_session1 = session1
         game_session_snap = GameSessionSnapshot()
 
         y = game_session_snap.generate_snapshot(game_session1)
         return y
+
 
 class GameSessionSnapshot:
     def __init__(self):
@@ -46,7 +50,6 @@ class GameSessionSnapshot:
         self.trump_card:  Card
         self.trump_lifted: bool
         self.trump_lift_player: Player
-
 
     def generate_snapshot(self, game_session: GameSession):
         self.session_id = game_session.session_id
